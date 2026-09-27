@@ -13,7 +13,7 @@ botonBuscar.addEventListener("click", () => {
         return;
     }
 
-    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}`;
+    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${titulo}`;
 
     fetch(url)
         .then(response => response.json())
