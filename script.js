@@ -1,38 +1,19 @@
-console.log("¡Script cargado correctamente!");
-const API_KEY = "9bc46c3d";
+console.log("Este es el script");
 
-const botonBuscar = document.getElementById("botonBuscar");
-const inputTitulo = document.getElementById("tituloPelicula");
-const divResultado = document.getElementById("resultado");
+document.getElementById('boton-buscar').addEventListener('click', function() {
+    const titulo = document.getElementById('buscador').value;
+    const apiKey = '6748eca6';
+    const url = `https://www.omdbapi.com/?apikey=${apiKey}&t=${titulo}`;
 
-botonBuscar.addEventListener("click", async () => {
-    const titulo = inputTitulo.value.trim();
-
-    if (titulo === "") {
-        divResultado.textContent = "Por favor, escribe un título.";
-        return;
-    }
-
-    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${titulo}`;
-
-    response = await fetch(url);
-    datos = await response.json();
-    
     fetch(url)
-        .then(response => response.json())
+        .then(respuesta => respuesta.json())
         .then(datos => {
-            if (datos.Response === "False") {
-                divResultado.textContent = "No se ha encontrado esa película.";
-                return;
+            const resultado = document.getElementById('resultado');
+            
+            if (datos.Response === "True") {
+                resultado.innerHTML = `<strong>Director:</strong> ${datos.Director} <br> <strong>Año:</strong> ${datos.Year}`;
+            } else {
+                resultado.innerHTML = "Película no encontrada.";
             }
-
-            divResultado.innerHTML = `
-                <p><strong>Director:</strong> ${datos.Director}</p>
-                <p><strong>Año:</strong> ${datos.Year}</p>
-            `;
         })
-        .catch(error => {
-            console.error("Error al llamar a la API:", error);
-            divResultado.textContent = "Ha ocurrido un error al buscar la película.";
-        });
 });
