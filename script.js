@@ -5,7 +5,7 @@ const botonBuscar = document.getElementById("botonBuscar");
 const inputTitulo = document.getElementById("tituloPelicula");
 const divResultado = document.getElementById("resultado");
 
-botonBuscar.addEventListener("click", () => {
+botonBuscar.addEventListener("click", async () => {
     const titulo = inputTitulo.value.trim();
 
     if (titulo === "") {
@@ -15,6 +15,9 @@ botonBuscar.addEventListener("click", () => {
 
     const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${titulo}`;
 
+    response = await fetch(url);
+    datos = await response.json();
+    
     fetch(url)
         .then(response => response.json())
         .then(datos => {
